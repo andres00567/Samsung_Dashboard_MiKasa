@@ -1,0 +1,8 @@
+.env
+node_modules/
+*.wgt
+*.tpk
+*.log
+.DS_Store
+.metadata/
+.settings/
