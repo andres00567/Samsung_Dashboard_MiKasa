@@ -1269,7 +1269,7 @@
     const source=video.getAttribute('src')||'';
     const logical=video.dataset.mediaSource||source;
     if(!api||!/^media\/[a-z0-9][a-z0-9._-]*\.mp4$/i.test(logical))return false;
-    if(source===nativeWallpaperFailedSource&&Date.now()-nativeWallpaperFailedAt<60000)return false;
+    if(logical===nativeWallpaperFailedSource&&Date.now()-nativeWallpaperFailedAt<60000)return false;
     if(!moving){stopNativeWallpaper();video.pause();return true}
     if(nativeWallpaperRequested===source)return true;
     nativeWallpaperAttemptedSource=source;
@@ -1284,10 +1284,14 @@
     try{const packaged=new URL(logical,document.baseURI).href;if(!candidates.includes(packaged))candidates.push(packaged)}catch{}
     const failed=()=>{
       if(generation!==nativeWallpaperGeneration)return;
-      nativeWallpaperFailedSource=source;nativeWallpaperFailedAt=Date.now();
+      nativeWallpaperFailedSource=logical;nativeWallpaperFailedAt=Date.now();
       nativeWallpaperRequested='';closeNativeWallpaper();
       if(cinemaSelected())setCinemaPlaybackStatus('Samsung video decoder failed · trying HTML5');
       else $('wallpaperLoadStatus').textContent='LIVE · decoder failed · trying HTML5';
+      // Fall back to the local asset if the bridge is unreachable.
+      if(/^https?:\/\//i.test(source)&&/^media\/[a-z0-9][a-z0-9._-]*\.mp4$/i.test(logical)){
+        video.pause();video.setAttribute('src',logical);video.load();
+      }
       const fallback=video.play();if(fallback&&typeof fallback.catch==='function')fallback.catch(()=>{});
     };
     const attempt=index=>{
