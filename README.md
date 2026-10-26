@@ -2,13 +2,13 @@
 
 Mi Kasa is a Samsung Tizen launcher with an iPhone-inspired lock screen, interactive app dock, Plex Continue Watching/resume, security camera widget, movie calendar, and Live/Cinema video wallpaper.
 
-**Version 0.1.14 — TV video-plane visibility and layout update**
+**Version 0.1.15 — Plex Continue Watching fix**
 
-- [Download full v0.1.14 source with all MP4 videos](https://chatgpt.com/library?file_id=libfile_50292a6229288191ab82042019d97e57&account_id=personal)
-- [Download smaller v0.1.14 source hotfix](https://chatgpt.com/library?file_id=libfile_4d2d02fed2e88191bffa539ab935efd0&account_id=personal)
+- [Download full v0.1.15 source with all MP4 videos](https://chatgpt.com/library?file_id=libfile_028dafac21d48191ac0d0a41dc05f6dc&account_id=personal)
+- [Download smaller v0.1.15 source hotfix](https://chatgpt.com/library?file_id=libfile_632a349406ec8191a4e1176bbd1ac112&account_id=personal)
 - [Physical TV video validation checklist](https://github.com/andres00567/Samsung_Dashboard_MiKasa/issues/1)
 
-This release moves Apps above Continue Watching/Calendar, moves the persistent camera preview to the far right to clear the clock, and makes root UI surfaces transparent while Samsung AVPlay renders behind the application. If video still fails, the app now displays a playback-error notice instead of leaving only a static poster. **Playback on physical hardware is not yet verified.**
+Version 0.1.15 fixes a root cause of Continue Watching launch failures: Plex media Part keys normally end in `file.mkv`/`file.mp4`, but our bridge erroneously accepted only bare `/file`. The player now validates Plex's stream before opening fullscreen, supports Back to cancel requests, automatically exits on unrecoverable playback failure, and clears Samsung's opaque HTML plane for native Plex video. The release retains the v0.1.14 changes: Apps above Continue Watching/Calendar, moves the persistent camera preview to the far right to clear the clock, and makes root UI surfaces transparent while Samsung AVPlay renders behind the application. If video still fails, the app now displays a playback-error notice instead of leaving only a static poster. **Playback on physical hardware is not yet verified.**
 
 ## Repository
 
