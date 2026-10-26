@@ -34,10 +34,10 @@ const mockPlex = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify({ MediaContainer: { Metadata: [
       { ratingKey: '100', title: 'Actual Movie', duration: 100000, viewOffset: 64000,
-        Media: [{ container: 'mp4', videoCodec: 'h264', Part: [{ key: '/library/parts/501/123/file' }] }] },
+        Media: [{ container: 'mkv', videoCodec: 'h264', Part: [{ key: '/library/parts/501/123/file.mkv' }] }] },
     ] } }));
   }
-  if (req.url === '/library/parts/501/123/file') {
+  if (req.url === '/library/parts/501/123/file.mkv') {
     const range = req.headers.range;
     const match = range && /^bytes=(\d+)-(\d*)$/.exec(range);
     if (match) {
