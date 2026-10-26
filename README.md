@@ -2,6 +2,14 @@
 
 Mi Kasa is a Samsung Tizen launcher with an iPhone-inspired lock screen, interactive app dock, Plex Continue Watching/resume, security camera widget, movie calendar, and Live/Cinema video wallpaper.
 
+**Version 0.1.16 — Music and embedded Windows**
+
+- [Download full v0.1.16 source with all MP4 videos](https://chatgpt.com/library?file_id=libfile_1ad81d6b3d0881918fe0c30d215caf1f&account_id=personal)
+- [Download smaller v0.1.16 source hotfix](https://chatgpt.com/library?file_id=libfile_f95e5e8654cc8191b09348b2b698e58d&account_id=personal)
+- [Physical TV video validation checklist](https://github.com/andres00567/Samsung_Dashboard_MiKasa/issues/1)
+
+Version 0.1.16 adds a **Windows** workspace with up to four concurrently open panels: an HTML5 music/radio player for direct MP3/AAC streams, embedded webpages when the website permits framing, direct video playback, and a shortcut to the existing camera viewer. Panels support minimize/expand/close, up to 18 locally saved shortcuts, and a compact music transport that remains accessible across Mi Kasa tabs. Remote focus navigation and Back handling have been integrated with the existing dashboard. Native Tizen apps and sites that prohibit iframe embedding cannot be hosted as child windows; use their installed TV app tiles instead. Previous 0.1.15 Plex playback fixes are retained. The included software checks passed; the new workspace still requires validation on physical hardware.
+
 **Version 0.1.15 — Plex Continue Watching fix**
 
 - [Download full v0.1.15 source with all MP4 videos](https://chatgpt.com/library?file_id=libfile_028dafac21d48191ac0d0a41dc05f6dc&account_id=personal)
