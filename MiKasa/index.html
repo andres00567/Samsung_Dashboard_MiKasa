@@ -494,6 +494,58 @@
     @media(max-height:850px) and (min-width:851px){#view-home .lock-screen-hero{min-height:115px}.lock-screen-clock{font-size:clamp(78px,10vh,122px)}#view-home .dash-grid>div{padding:9px 13px}#view-home .media-card{min-height:105px}#view-home .app-strip .app-tile{height:70px}#view-home .app-strip{padding:7px 13px;margin-bottom:6px}}
     @media(max-width:1100px){.brand{min-width:auto}.nav-btn{padding:9px 11px}.weather-city{display:none}#view-home .app-strip{gap:7px;padding:8px;flex-wrap:wrap}#view-home .app-strip .app-tile{width:clamp(76px,9vw,112px)}#view-home .dash-grid{grid-template-columns:1fr 1fr;gap:10px}#view-home .dash-grid>div{padding:10px}}
     @media(max-width:750px){.wrap{padding:12px}.topbar{padding:0 9px;gap:4px}.brand-word{display:none}.brand-mark{width:30px;height:30px}.nav{gap:0}.nav-btn{padding:8px 6px;font-size:10px}.top-actions{gap:4px}.weather-chip{display:none}.top-divider{display:none}.round{width:30px;height:30px}.lock-screen-clock{font-size:clamp(78px,16vw,128px)}#view-home .dash-grid{grid-template-columns:1fr}#view-home .media-card{min-height:100px}#view-home .app-strip .app-tile{height:72px;width:75px}}
+    /* Embedded workspace: all windows stay inside Mi Kasa, with remote-sized controls. */
+    .workspace-page{padding:clamp(22px,3.6vh,42px) 2px 10px;display:flex;flex-direction:column;gap:17px;min-height:0;flex:1;overflow-y:auto}
+    .workspace-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:25px}
+    .workspace-heading small{display:block;color:#a5edda;font:800 10px/1.5 'Manrope',Arial,sans-serif;letter-spacing:.18em}
+    .workspace-heading h1{margin:4px 0 7px;font:800 clamp(25px,2.6vw,42px)/1.12 'Manrope',Arial,sans-serif;letter-spacing:-.055em}
+    .workspace-heading p{font-size:12px;color:#c0ccda;line-height:1.55;max-width:730px}
+    .workspace-create{display:flex;align-items:stretch;gap:9px;flex-wrap:wrap}
+    .workspace-create button{min-height:45px;border:1px solid #ffffff45;border-radius:13px;background:rgba(15,29,43,.78);color:#e6f6f1;padding:9px 18px;font:800 12px 'Manrope',Arial,sans-serif}
+    .workspace-create button:hover{background:#315b59}.workspace-create button.primary{color:#10231e;background:#b8efde;border-color:#b8efde}
+    .workspace-form{display:grid;grid-template-columns:minmax(150px,.65fr) minmax(210px,1.25fr) minmax(250px,2.5fr) auto auto;gap:9px;align-items:end;background:rgba(7,17,31,.88);border:1px solid #b8efde69;border-radius:15px;padding:13px}
+    .workspace-form label{display:flex;flex-direction:column;gap:6px;font-size:10px;color:#a9c2c7;font-weight:800;letter-spacing:.05em}
+    .workspace-form input,.workspace-form select{width:100%;min-height:38px;background:#15263a;border:1px solid #ffffff43;border-radius:8px;color:#fff;padding:7px 10px;font-size:12px}
+    .workspace-form button{min-height:38px;border:0;border-radius:9px;padding:7px 13px;font-size:11px;font-weight:800;background:#b8efde;color:#123026}
+    .workspace-form .workspace-cancel{background:#344355;color:#f3f6f8}
+    .workspace-notice{font-size:10px;line-height:1.5;color:#aec0d0}
+    .workspace-bookmarks{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-height:27px}
+    .workspace-bookmarks strong{font-size:10px;color:#a6b7c7;letter-spacing:.12em;margin-right:7px;text-transform:uppercase}
+    .workspace-bookmarks button{border:1px solid #ffffff40;background:#ffffff18;color:#eaf5fa;border-radius:9px;padding:7px 12px;font-size:11px;font-weight:700}
+    .workspace-bookmarks button:hover{background:#ffffff2c}
+    .window-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;min-height:0;flex:1;align-content:start}
+    .window-empty{grid-column:1/-1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:13px;min-height:220px;border:1px dashed #ffffff48;border-radius:20px;background:#111e30a6;text-align:center;color:#c1d1d9;font-size:13px}
+    .window-empty strong{font:800 19px 'Manrope',Arial,sans-serif;color:#f5f8fa}
+    .hosted-window{min-width:0;min-height:245px;display:flex;flex-direction:column;border:1px solid #ffffff53;border-radius:19px;background:#0a1324f2;overflow:hidden;box-shadow:0 12px 38px #0005}
+    .hosted-window-header{display:flex;align-items:center;gap:12px;padding:10px 12px;min-height:51px;border-bottom:1px solid #ffffff28;background:#14243aed}
+    .hosted-window-icon{flex:none;display:grid;place-items:center;height:28px;width:28px;border-radius:9px;color:#b8efde;background:#b8efde24;font-size:17px}
+    .hosted-window-heading{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+    .hosted-window-heading b{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .hosted-window-heading small{font-size:9px;color:#94aabe;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .hosted-window-actions{display:flex;gap:6px;flex:none}
+    .hosted-window-actions button{border:1px solid #ffffff36;border-radius:9px;background:#ffffff13;color:#d8eaf0;min-height:31px;padding:5px 10px;font-size:10px;font-weight:800}
+    .hosted-window-actions button:hover{background:#ffffff2b}.hosted-window-actions .danger:hover{background:#ab435f}
+    .hosted-window-body{flex:1;display:flex;flex-direction:column;min-height:190px;position:relative}
+    .hosted-window-body iframe,.hosted-window-body video{display:block;width:100%;height:100%;min-height:220px;flex:1;border:0;background:#080e17}
+    .hosted-window-body video{object-fit:contain}
+    .window-embed-hint{display:flex;justify-content:space-between;align-items:center;gap:13px;padding:8px 12px;background:#0e1b2b;font-size:10px;color:#a9bac8}
+    .window-embed-hint button{flex:none;border:1px solid #ffffff40;background:#ffffff15;border-radius:7px;color:#e8f5f6;padding:7px 10px;font-weight:800;font-size:10px}
+    .window-audio{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px;background:radial-gradient(ellipse at 60% 20%,#28505a,#101e31 67%,#0a1424)}
+    .window-audio-art{height:74px;width:74px;border-radius:23px;display:grid;place-items:center;background:linear-gradient(140deg,#b8efde,#428eaa);color:#123432;font:800 40px 'Manrope',Arial,sans-serif;box-shadow:0 15px 50px #061a2799}
+    .window-audio .window-audio-title{font:800 16px 'Manrope',Arial,sans-serif;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .window-audio .window-audio-status{font-size:11px;color:#bad3dc}
+    .window-audio-controls{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:9px}
+    .window-audio-controls button{min-width:86px;min-height:38px;border:1px solid #ffffff43;border-radius:11px;background:#ffffff20;color:#f3fbff;font-size:11px;font-weight:800;padding:8px 12px}
+    .window-audio-controls button:first-child{background:#b8efde;color:#12342a}
+    .hosted-window.minimized{min-height:51px}.hosted-window.minimized .hosted-window-body{display:none}
+    .window-grid.has-maximized .hosted-window:not(.maximized){display:none}
+    .hosted-window.maximized{grid-column:1/-1;min-height:min(56vh,650px)}
+    .window-grid.has-maximized{grid-template-columns:1fr}
+    .music-mini{position:fixed;z-index:12;left:clamp(26px,3vw,65px);bottom:95px;display:flex;gap:9px;align-items:center;padding:8px 10px 8px 15px;max-width:420px;border:1px solid #b8efde64;border-radius:14px;background:#0b2034ee;box-shadow:0 12px 40px #0009}
+    .music-mini span{min-width:0;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e5f9f3;font-size:11px;font-weight:800}
+    .music-mini button{border:1px solid #ffffff3e;background:#ffffff24;color:#fff;border-radius:8px;min-height:29px;padding:5px 9px;font-size:10px;font-weight:800}
+    @media(max-width:1100px){.workspace-form{grid-template-columns:1fr 1fr}.window-grid{grid-template-columns:1fr}}
+    @media(max-width:680px){.workspace-heading{display:block}.workspace-form{grid-template-columns:1fr}.hosted-window-header{flex-wrap:wrap}.hosted-window-actions{width:100%}.music-mini{left:12px;right:12px;bottom:55px;max-width:none}}
   </style>
   <script src="$WEBAPIS/webapis/webapis.js"></script>
 </head>
@@ -524,7 +576,7 @@
   <div class="wrap">
     <header class="topbar">
       <div class="brand"><span class="brand-mark"><svg><use href="#i-home"/></svg></span><div class="brand-word">Mi Kasa</div></div>
-      <nav class="nav" aria-label="Main navigation"><button data-tv-focus class="nav-btn active" data-view="home">Home</button><button data-tv-focus class="nav-btn" data-view="apps">Apps</button><button data-tv-focus class="nav-btn" data-view="media">Media</button><button data-tv-focus class="nav-btn" data-view="smart">Smart Home</button></nav>
+      <nav class="nav" aria-label="Main navigation"><button data-tv-focus class="nav-btn active" data-view="home">Home</button><button data-tv-focus class="nav-btn" data-view="apps">Apps</button><button data-tv-focus class="nav-btn" data-view="media">Media</button><button data-tv-focus class="nav-btn" data-view="windows">Windows</button><button data-tv-focus class="nav-btn" data-view="smart">Smart Home</button></nav>
       <div class="top-actions"><button data-tv-focus class="weather-chip" id="weatherButton" title="Weather settings"><svg><use href="#i-sun"/></svg><span class="weather-value" id="weatherTemp">--°</span><span class="weather-city" id="weatherCity">Loading weather</span></button><div class="top-divider"></div><button data-tv-focus class="round" id="cameraButton" aria-label="Toggle camera dropdown" aria-controls="cameraPip" aria-expanded="false" aria-pressed="false" title="Toggle cameras"><svg><use href="#i-camera"/></svg></button><button data-tv-focus class="round" id="searchButton" aria-label="Search apps"><svg><use href="#i-search"/></svg></button><button data-tv-focus class="round" id="settingsButton" aria-label="Open settings"><svg><use href="#i-settings"/></svg></button></div>
     </header>
     <main class="view active" id="view-home">
@@ -536,6 +588,14 @@
     </main>
     <main class="view" id="view-apps"><div class="inner-page compact-page"><div class="page-tools compact-tools"><button data-tv-focus class="action" id="addAppFromPage"><svg><use href="#i-plus"/></svg>Add application</button><button data-tv-focus class="action secondary" id="manageAppsFromPage"><svg><use href="#i-reorder"/></svg>Manage order</button></div><div class="apps-grid" id="allApps"></div></div></main>
     <main class="view" id="view-media"><div class="inner-page compact-page"><div class="page-tools compact-tools"><button data-tv-focus class="action" id="connectMedia"><svg><use href="#i-settings"/></svg>Manage connections</button><button data-tv-focus class="action secondary" id="refreshPlex">Refresh Plex</button><span class="demo-tag" id="mediaModeBadge">OFFLINE PREVIEW</span></div><div class="panel-grid"><article class="info-panel"><div class="panel-top"><div class="panel-title">Plex</div><div class="panel-icon"><svg><use href="#i-play"/></svg></div></div><p>Continue Watching</p><div class="panel-stat"><span id="plexContinueCount">--</span> <span style="font-size:13px;color:#aebdca">items</span></div><div class="panel-bottom" id="plexConnectionLabel">Waiting for LAN server</div></article><article class="info-panel"><div class="panel-top"><div class="panel-title">Radarr</div><div class="panel-icon"><svg><use href="#i-film"/></svg></div></div><p>Upcoming movies</p><div class="panel-stat"><span id="radarrUpcoming">--</span> <span style="font-size:13px;color:#aebdca">scheduled</span></div><div class="panel-bottom" id="radarrConnectionLabel">Waiting for LAN server</div></article><article class="info-panel"><div class="panel-top"><div class="panel-title">Sonarr</div><div class="panel-icon"><svg><use href="#i-calendar"/></svg></div></div><p>Upcoming episodes</p><div class="panel-stat"><span id="sonarrUpcoming">--</span> <span style="font-size:13px;color:#aebdca">scheduled</span></div><div class="panel-bottom" id="sonarrConnectionLabel">Waiting for LAN server</div></article></div></div></main>
+    <main class="view" id="view-windows"><div class="workspace-page">
+      <div class="workspace-heading"><div><small>MI KASA · EMBEDDED WORKSPACE</small><h1>Your windows, one screen.</h1><p>Play a direct music stream, watch a compatible video, or display an embeddable web panel alongside other windows. Your music keeps playing as you browse Mi Kasa.</p></div><span class="demo-tag">UP TO 4 LIVE WINDOWS</span></div>
+      <div class="workspace-create"><button data-tv-focus class="primary" id="addMusicWindow">♫ Music / radio</button><button data-tv-focus id="addWebWindow">▣ Web panel</button><button data-tv-focus id="addVideoWindow">▶ Video stream</button><button data-tv-focus id="openWorkspaceCameras">▤ Cameras</button></div>
+      <form class="workspace-form" id="windowForm" hidden><label>TYPE<select data-tv-focus id="windowKind"><option value="audio">Music / radio</option><option value="web">Embedded webpage</option><option value="video">Video stream</option></select></label><label>DISPLAY NAME<input data-tv-focus id="windowName" maxlength="54" placeholder="My radio / dashboard"></label><label>STREAM OR PAGE URL<input data-tv-focus id="windowUrl" type="url" placeholder="https://example.com/stream.mp3"></label><button data-tv-focus type="submit">Save & open</button><button data-tv-focus type="button" class="workspace-cancel" id="cancelWindow">Cancel</button></form>
+      <div class="workspace-bookmarks" id="windowBookmarks" aria-label="Saved embedded windows"></div>
+      <div class="window-grid" id="windowGrid" aria-label="Open embedded windows"></div>
+      <p class="workspace-notice">Music uses direct MP3/AAC streams. Web content must permit embedding; Spotify, Netflix and other native Samsung apps cannot be hosted inside another TV app. Avoid putting passwords or access tokens in saved URLs.</p>
+    </div></main>
     <main class="view" id="view-smart"><div class="inner-page compact-page"><div class="page-tools compact-tools"><button data-tv-focus class="action" id="connectSmart"><svg><use href="#i-settings"/></svg>Configure SmartThings</button><span class="demo-tag">DEMO CONTROLS</span></div><div class="scene-grid"><button data-tv-focus class="scene-card" data-scene="Living room"><span class="scene-icon"><svg><use href="#i-light"/></svg></span><span><span class="scene-name">Living room</span><span class="scene-state">Tap to toggle</span></span></button><button data-tv-focus class="scene-card" data-scene="Movie night"><span class="scene-icon"><svg><use href="#i-play"/></svg></span><span><span class="scene-name">Movie night</span><span class="scene-state">Tap to activate</span></span></button><button data-tv-focus class="scene-card" data-scene="Evening"><span class="scene-icon"><svg><use href="#i-moon"/></svg></span><span><span class="scene-name">Evening</span><span class="scene-state">Tap to activate</span></span></button><button data-tv-focus class="scene-card" data-scene="Away mode"><span class="scene-icon"><svg><use href="#i-shield"/></svg></span><span><span class="scene-name">Away mode</span><span class="scene-state">Tap to activate</span></span></button></div></div></main>
     <section class="news-banner" aria-label="News headlines">
       <div class="news-identity"><span class="news-pill"><i></i> NEWS</span><span class="news-source" id="newsSource">RSS · CONNECTING</span></div>
@@ -545,9 +605,10 @@
     <div class="footer"><div>Mi Kasa</div><div class="keys"><span><span class="key">← ↑ ↓ →</span> Navigate</span><span><span class="key">↵</span> Select</span><span><span class="key">Esc</span> Back</span><span><span class="key">S</span> Settings</span></div><div id="connectionState">PREVIEW MODE</div></div>
   </div>
 </div>
+<div class="music-mini" id="musicMini" hidden><span id="musicMiniTitle">Music</span><button data-tv-focus id="musicMiniToggle">Pause</button><button data-tv-focus id="musicMiniWindows">Windows</button></div>
 <div class="shade" id="shade"></div>
 <aside class="drawer" id="drawer" aria-label="Dashboard settings" aria-hidden="true">
-  <div class="drawer-head"><div><div class="drawer-title">Settings</div><div class="drawer-sub">Mi Kasa v0.1.15 · Plex playback recovery</div></div><button class="close-btn" id="closeSettings" aria-label="Close settings" data-tv-focus><svg><use href="#i-close"/></svg></button></div>
+  <div class="drawer-head"><div><div class="drawer-title">Settings</div><div class="drawer-sub">Mi Kasa v0.1.16 · embedded workspace</div></div><button class="close-btn" id="closeSettings" aria-label="Close settings" data-tv-focus><svg><use href="#i-close"/></svg></button></div>
   <div class="drawer-body">
     <section class="settings-section wallpaper-settings" aria-labelledby="wallpaperSettingsTitle">
       <div class="wallpaper-heading"><h3 id="wallpaperSettingsTitle">Wallpaper & appearance</h3><span class="settings-live-label">TV DISPLAY</span></div>
@@ -805,7 +866,7 @@
     })}catch(error){showToast('Cannot launch '+a.name+': '+(error.name||error.message||'TV restriction'))}
   }
   function renderManagedApps(){const host=$('manageAppList');host.replaceChildren();apps.forEach((a,index)=>{const row=document.createElement('div');row.className='manage-app';const avatar=document.createElement('div');avatar.className='app-avatar';avatar.textContent=(a.mark||a.name[0]||'?').slice(0,2);const label=document.createElement('div');label.className='grow';label.textContent=a.name;row.append(avatar,label);[['↑',-1,'Move '+a.name+' up'],['↓',1,'Move '+a.name+' down'],['×',0,'Remove '+a.name]].forEach(([txt,delta,aria])=>{const btn=document.createElement('button');btn.className='mini-btn';btn.textContent=txt;btn.title=aria;btn.setAttribute('aria-label',aria);btn.setAttribute('data-tv-focus','');btn.onclick=()=>{if(delta===0){apps.splice(index,1)}else{const target=index+delta;if(target<0||target>=apps.length)return;[apps[index],apps[target]]=[apps[target],apps[index]]}save();renderApps();btn.focus();showToast('App shelf updated')};row.appendChild(btn)});host.appendChild(row)})}
-  function setView(id){if(!['home','apps','media','smart'].includes(id))return;currentView=id;document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));document.querySelectorAll('.nav-btn').forEach(b=>{const active=b.dataset.view===id;b.classList.toggle('active',active);b.setAttribute('aria-current',active?'page':'false')});}
+  function setView(id){if(!['home','apps','media','windows','smart'].includes(id))return;currentView=id;document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));document.querySelectorAll('.nav-btn').forEach(b=>{const active=b.dataset.view===id;b.classList.toggle('active',active);b.setAttribute('aria-current',active?'page':'false')});}
   function updateClock(){const d=new Date();$('clock').textContent=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});$('dateLabel').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});$('lockGreeting').textContent='Welcome home'+(settings.name?', '+String(settings.name).slice(0,32):'')}
   // The calendar is ready for live Radarr / Sonarr events; these are labeled examples.
   const releaseExamples=[
@@ -1816,6 +1877,185 @@
   function openSearch(){lastFocus=document.activeElement;$('searchOverlay').hidden=false;$('searchInput').value='';renderSearch('');setTimeout(()=>$('searchInput').focus(),20)}
   function closeSearch(){$('searchOverlay').hidden=true;if(lastFocus?.focus)lastFocus.focus()}
   function renderSearch(query){const host=$('searchResults');host.replaceChildren();const results=apps.filter(a=>a.name.toLowerCase().includes(query.toLowerCase())).slice(0,9);if(!results.length){const d=document.createElement('div');d.className='empty';d.textContent='No matching shortcuts';host.appendChild(d)}results.forEach(a=>{const b=document.createElement('button');b.className='search-result';b.setAttribute('data-tv-focus','');b.innerHTML=`${icon('grid')} ${escapeHTML(a.name)} <span>Open app →</span>`;b.onclick=()=>{closeSearch();openApp(a)};host.appendChild(b)})}
+  // Embedded windows are ordinary content in the Mi Kasa web application.
+  // Tizen/Smart Hub applications run in separate processes and cannot be
+  // embedded here. A direct stream needs no third-party OAuth credentials.
+  const allowedWindowKinds=['web','audio','video'];
+  const savedWindowPresets=safeParse('tvhome-window-presets',[]);
+  let windowPresets=Array.isArray(savedWindowPresets)?savedWindowPresets.filter(p=>p&&typeof p.name==='string'&&typeof p.url==='string'&&allowedWindowKinds.includes(p.kind)).slice(0,18):[];
+  const hostedWindows=[];
+  let windowSequence=0,activeAudioWindow=null;
+  function allowedEmbeddedURL(value){
+    try{
+      const url=new URL(String(value||'').trim());
+      if(!['http:','https:'].includes(url.protocol)||url.username||url.password||!url.hostname)return null;
+      return url.href;
+    }catch{return null}
+  }
+  function saveWindowPresets(){localStorage.setItem('tvhome-window-presets',JSON.stringify(windowPresets))}
+  function windowButton(label,action,extraClass){
+    const b=document.createElement('button');b.type='button';b.setAttribute('data-tv-focus','');b.textContent=label;
+    if(extraClass)b.className=extraClass;
+    b.addEventListener('click',action);return b;
+  }
+  function showWindowForm(kind){
+    setView('windows');$('windowForm').hidden=false;
+    $('windowKind').value=allowedWindowKinds.includes(kind)?kind:'web';
+    $('windowName').value=kind==='audio'?'My music':kind==='video'?'My video':'My web panel';
+    $('windowUrl').value='';
+    $('windowUrl').placeholder=kind==='audio'?'https://example.com/live.mp3':kind==='video'?'https://example.com/video.mp4':'https://example.com/';
+    $('windowName').focus();
+  }
+  function updateWindowPlaceholder(){
+    const grid=$('windowGrid');const prior=grid.querySelector('.window-empty');
+    if(prior)prior.remove();
+    if(hostedWindows.length)return;
+    const empty=document.createElement('div');empty.className='window-empty';
+    const title=document.createElement('strong');title.textContent='Your workspace is ready';
+    const sub=document.createElement('span');sub.textContent='Open Music, a Web panel, or a Video stream to get started.';
+    empty.append(title,sub);grid.appendChild(empty);
+  }
+  function renderWindowBookmarks(){
+    const host=$('windowBookmarks');host.replaceChildren();
+    const heading=document.createElement('strong');heading.textContent='Saved windows';host.appendChild(heading);
+    if(!windowPresets.length){const hint=document.createElement('span');hint.className='workspace-notice';hint.textContent='Save a URL above to add one-touch launchers here.';host.appendChild(hint);return}
+    windowPresets.forEach(preset=>{
+      host.appendChild(windowButton(preset.kind==='audio'?'♫ '+preset.name:preset.kind==='video'?'▶ '+preset.name:'▣ '+preset.name,()=>openHostedWindow(preset)));
+      const remove=windowButton('✕',()=>{
+        windowPresets=windowPresets.filter(item=>item.id!==preset.id);
+        saveWindowPresets();renderWindowBookmarks();showToast('Saved shortcut removed');
+      });
+      remove.setAttribute('aria-label','Remove '+preset.name+' shortcut');host.appendChild(remove);
+    });
+  }
+  function updateMusicMini(){
+    if(activeAudioWindow&&!hostedWindows.includes(activeAudioWindow))activeAudioWindow=null;
+    if(!activeAudioWindow)activeAudioWindow=hostedWindows.find(entry=>entry.preset.kind==='audio')||null;
+    $('musicMini').hidden=!activeAudioWindow;
+    if(activeAudioWindow){
+      $('musicMiniTitle').textContent='♫ '+activeAudioWindow.preset.name;
+      $('musicMiniToggle').textContent=activeAudioWindow.media&&!activeAudioWindow.media.paused?'Pause':'Play';
+    }
+  }
+  function pauseOtherPlayers(active){
+    hostedWindows.forEach(entry=>{if(entry!==active&&entry.media){try{entry.media.pause()}catch{}}});
+  }
+  function playHostedMedia(entry){
+    const media=entry.media;
+    if(!media)return;
+    if(!media.paused){media.pause();updateMusicMini();return}
+    pauseOtherPlayers(entry);
+    if(entry.preset.kind==='audio')activeAudioWindow=entry;
+    const attempt=media.play();
+    if(attempt&&typeof attempt.catch==='function')attempt.catch(error=>{
+      entry.status.textContent='Playback failed. Check the stream URL and audio format.';
+      showToast('Stream could not play: '+(error.message||'unsupported stream'));
+      updateMusicMini();
+    });
+    updateMusicMini();
+  }
+  function refreshWindowLayout(){
+    const grid=$('windowGrid');grid.classList.toggle('has-maximized',hostedWindows.some(entry=>entry.card.classList.contains('maximized')));
+    updateWindowPlaceholder();updateMusicMini();
+  }
+  function closeHostedWindow(entry){
+    if(entry.media){entry.media.pause();entry.media.removeAttribute('src');entry.media.load()}
+    const iframe=entry.card.querySelector('iframe');if(iframe)iframe.removeAttribute('src');
+    entry.card.remove();const index=hostedWindows.indexOf(entry);if(index!==-1)hostedWindows.splice(index,1);
+    if(activeAudioWindow===entry)activeAudioWindow=null;
+    refreshWindowLayout();
+    $('addMusicWindow').focus();
+  }
+  function openHostedWindow(preset){
+    const url=allowedEmbeddedURL(preset.url);
+    if(!url){showToast('Saved URL is invalid; recreate this shortcut.');return}
+    hostedWindows.forEach(item=>{
+      if(item.card.classList.contains('maximized')){
+        item.card.classList.remove('maximized');
+        const expand=item.card.querySelector('.hosted-window-actions button:nth-child(2)');
+        if(expand)expand.textContent='Expand';
+      }
+    });
+    refreshWindowLayout();
+    const existing=hostedWindows.find(entry=>entry.preset.id===preset.id);
+    if(existing){setView('windows');existing.card.classList.remove('minimized');existing.card.querySelector('button')?.focus();return}
+    if(hostedWindows.length>=4){showToast('Close a window before opening another. Maximum: four.');return}
+    setView('windows');
+    const card=document.createElement('article');card.className='hosted-window';card.setAttribute('aria-label',preset.name+' window');
+    const header=document.createElement('header');header.className='hosted-window-header';
+    const symbol=document.createElement('span');symbol.className='hosted-window-icon';symbol.textContent=preset.kind==='audio'?'♫':preset.kind==='video'?'▶':'▣';
+    const heading=document.createElement('div');heading.className='hosted-window-heading';
+    const title=document.createElement('b');title.textContent=preset.name;
+    const link=document.createElement('small');link.textContent=url;
+    heading.append(title,link);
+    const actions=document.createElement('div');actions.className='hosted-window-actions';
+    const body=document.createElement('div');body.className='hosted-window-body';
+    const entry={preset,card,media:null,status:null};
+    const minimize=windowButton('Minimize',()=>{
+      if(card.classList.contains('maximized'))card.classList.remove('maximized');
+      const reduced=card.classList.toggle('minimized');minimize.textContent=reduced?'Restore':'Minimize';refreshWindowLayout();
+    });
+    const maximize=windowButton('Expand',()=>{
+      const expanded=!card.classList.contains('maximized');
+      hostedWindows.forEach(item=>item.card.classList.remove('maximized'));
+      card.classList.remove('minimized');minimize.textContent='Minimize';
+      card.classList.toggle('maximized',expanded);maximize.textContent=expanded?'Restore':'Expand';refreshWindowLayout();
+    });
+    const close=windowButton('✕ Close',()=>closeHostedWindow(entry),'danger');
+    actions.append(minimize,maximize,close);header.append(symbol,heading,actions);card.append(header,body);
+    if(preset.kind==='web'){
+      const frame=document.createElement('iframe');frame.title=preset.name;
+      frame.setAttribute('sandbox','allow-scripts allow-forms allow-same-origin allow-popups');
+      frame.setAttribute('allow','autoplay; fullscreen; encrypted-media');
+      frame.setAttribute('referrerpolicy','no-referrer');
+      const hint=document.createElement('div');hint.className='window-embed-hint';
+      const text=document.createElement('span');text.textContent='If blank, this site forbids iframe embedding. Try another site or its official TV app.';
+      const focus=windowButton('Focus page',()=>frame.focus());
+      hint.append(text,focus);body.append(frame,hint);frame.src=url;
+    }else{
+      const media=document.createElement(preset.kind==='audio'?'audio':'video');
+      entry.media=media;media.preload='none';media.src=url;
+      if(preset.kind==='video'){media.setAttribute('playsinline','');media.setAttribute('webkit-playsinline','');body.appendChild(media)}
+      else{
+        const panel=document.createElement('div');panel.className='window-audio';
+        const art=document.createElement('div');art.className='window-audio-art';art.textContent='♫';
+        const name=document.createElement('div');name.className='window-audio-title';name.textContent=preset.name;
+        const status=document.createElement('div');status.className='window-audio-status';status.textContent='Ready · press Play';
+        entry.status=status;panel.append(art,name,status);body.append(panel);
+      }
+      const controls=document.createElement('div');controls.className='window-audio-controls';
+      const toggle=windowButton('▶ Play',()=>playHostedMedia(entry));
+      const quieter=windowButton('− Volume',()=>{media.volume=Math.max(0,media.volume-.1);showToast('Volume '+Math.round(media.volume*100)+'%')});
+      const louder=windowButton('+ Volume',()=>{media.volume=Math.min(1,media.volume+.1);showToast('Volume '+Math.round(media.volume*100)+'%')});
+      controls.append(toggle,quieter,louder);
+      if(preset.kind==='video')controls.style.padding='9px';
+      if(preset.kind==='audio')body.querySelector('.window-audio').appendChild(controls);else body.appendChild(controls);
+      media.addEventListener('playing',()=>{toggle.textContent='Ⅱ Pause';if(entry.status)entry.status.textContent='Playing';updateMusicMini()});
+      media.addEventListener('pause',()=>{toggle.textContent='▶ Play';if(entry.status)entry.status.textContent='Paused';updateMusicMini()});
+      media.addEventListener('waiting',()=>{if(entry.status)entry.status.textContent='Buffering stream…'});
+      media.addEventListener('error',()=>{if(entry.status)entry.status.textContent='Stream unavailable or unsupported';showToast('Could not load '+preset.name)});
+    }
+    $('windowGrid').appendChild(card);hostedWindows.push(entry);refreshWindowLayout();minimize.focus();
+  }
+  $('windowKind').addEventListener('change',()=>{
+    const kind=$('windowKind').value;
+    $('windowUrl').placeholder=kind==='audio'?'https://example.com/live.mp3':kind==='video'?'https://example.com/video.mp4':'https://example.com/';
+  });
+  $('windowForm').addEventListener('submit',event=>{
+    event.preventDefault();
+    const kind=$('windowKind').value,name=$('windowName').value.trim(),url=allowedEmbeddedURL($('windowUrl').value);
+    if(!allowedWindowKinds.includes(kind)||!name||!url){showToast('Enter a name and a valid HTTP(S) stream/page URL.');return}
+    if(windowPresets.length>=18){showToast('You can save up to 18 window shortcuts.');return}
+    const preset={id:'window-'+(++windowSequence)+'-'+Date.now(),kind,name:name.slice(0,54),url};
+    windowPresets.push(preset);saveWindowPresets();renderWindowBookmarks();$('windowForm').hidden=true;openHostedWindow(preset);
+  });
+  $('cancelWindow').onclick=()=>{$('windowForm').hidden=true;$('addMusicWindow').focus()};
+  $('addMusicWindow').onclick=()=>showWindowForm('audio');
+  $('addWebWindow').onclick=()=>showWindowForm('web');
+  $('addVideoWindow').onclick=()=>showWindowForm('video');
+  $('openWorkspaceCameras').onclick=()=>{if($('cameraPip').hidden)togglePip();else $('pipCycleFocus').focus()};
+  $('musicMiniToggle').onclick=()=>{if(activeAudioWindow)playHostedMedia(activeAudioWindow)};
+  $('musicMiniWindows').onclick=()=>{setView('windows');if(activeAudioWindow)activeAudioWindow.card.querySelector('button')?.focus()};
   function activeScope(){if(!$('plexPlayer').hidden)return $('plexPlayer');if(!$('searchOverlay').hidden)return $('searchOverlay');if($('drawer').classList.contains('open'))return $('drawer');return $('app')}
   function getFocusable(){
     const scope=activeScope();
@@ -1824,6 +2064,8 @@
     // in the same spatial navigation graph unless CYCLE explicitly captures it.
     if(scope===$('app')&&!$('cameraPip').hidden)
       targets.push(...$('cameraPip').querySelectorAll('[data-tv-focus],button,input,select'));
+    if(scope===$('app')&&!$('musicMini').hidden)
+      targets.push(...$('musicMini').querySelectorAll('button'));
     return targets.filter(element=>{
       const rect=element.getBoundingClientRect(),style=getComputedStyle(element);
       return !element.disabled&&rect.width>0&&rect.height>0&&
@@ -1837,7 +2079,8 @@
     '.news-items','.news-actions','.apps-grid','.scene-grid','.page-tools',
     '.wallpaper-categories','.wallpaper-gallery','.manage-app',
     '.drawer-head','.cinema-controls','.split','.settings-section',
-    '.search-results','.pip-header'
+    '.search-results','.pip-header','.workspace-create','.workspace-form',
+    '.workspace-bookmarks','.hosted-window-actions','.window-audio-controls','.music-mini'
   ].join(',');
   function tvGroup(element){return element.closest(tvGroupSelector)||element.parentElement}
   function tvIntervalGap(startA,endA,startB,endB){
@@ -1963,6 +2206,16 @@
       else return;
       e.preventDefault();return;
     }
+    if(currentView==='windows'&&(key==='Escape'||key==='Back'||key==='Backspace')){
+      const expanded=hostedWindows.find(entry=>entry.card.classList.contains('maximized'));
+      if(expanded){
+        expanded.card.classList.remove('maximized');
+        const expand=expanded.card.querySelector('.hosted-window-actions button:nth-child(2)');
+        if(expand)expand.textContent='Expand';
+        refreshWindowLayout();expanded.card.querySelector('button')?.focus();e.preventDefault();return;
+      }
+      if(!$('windowForm').hidden){$('windowForm').hidden=true;$('addMusicWindow').focus();e.preventDefault();return}
+    }
     if(key==='Escape'||key==='Back'||(key==='Backspace'&&tag!=='INPUT')){
       if(!$('searchOverlay').hidden)closeSearch();
       else if($('drawer').classList.contains('open'))closeSettings();
@@ -1988,6 +2241,13 @@
         }
         if(key==='Enter'){addNativeApp();e.preventDefault();return}
         if(key==='ArrowLeft'||key==='ArrowRight'){moveFocus(key);e.preventDefault();return}
+      }
+      if(input.id==='windowKind'&&tag==='SELECT'){
+        if(key==='ArrowUp'||key==='ArrowDown'){
+          input.selectedIndex=(input.selectedIndex+(key==='ArrowDown'?1:input.options.length-1))%input.options.length;
+          input.dispatchEvent(new Event('change'));e.preventDefault();return;
+        }
+        if(key==='Enter'){moveFocus('ArrowRight');e.preventDefault();return}
       }
       // Text caret and range values retain Left/Right. Up/Down leaves the
       // field; otherwise TV users get trapped in the settings drawer.
@@ -2025,7 +2285,7 @@
       try{api.restore()}catch{stopNativeWallpaper();applyWallpaper()}
     }else applyWallpaper();
   });
-  renderApps();renderWallpaperChoices();refreshInstalledApps();renderReleaseCalendar();loadReleaseCalendar();renderPlexContinue();loadPlexContinue();renderNews();loadNews();testBridge();updateClock();loadWeather();setInterval(updateClock,30000);setInterval(loadWeather,1000*60*20);setInterval(loadNews,1000*60*15);setInterval(loadReleaseCalendar,1000*60*15);setInterval(loadPlexContinue,1000*60*2);
+  renderApps();renderWindowBookmarks();updateWindowPlaceholder();renderWallpaperChoices();refreshInstalledApps();renderReleaseCalendar();loadReleaseCalendar();renderPlexContinue();loadPlexContinue();renderNews();loadNews();testBridge();updateClock();loadWeather();setInterval(updateClock,30000);setInterval(loadWeather,1000*60*20);setInterval(loadNews,1000*60*15);setInterval(loadReleaseCalendar,1000*60*15);setInterval(loadPlexContinue,1000*60*2);
   document.querySelector('.nav-btn.active')?.setAttribute('aria-current','page');
   // Camera sources are registered on the LAN bridge. No camera URLs, tokens or
   // credentials are stored in the Tizen widget or in TV localStorage.
