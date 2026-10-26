@@ -407,7 +407,10 @@ async function plexPlaybackDetails(ratingKey) {
   const media = item?.Media?.[0];
   const part = media?.Part?.[0];
   const partPath = String(part?.key || '');
-  if (!/^\/library\/parts\/\d{1,16}\/(?:\d{1,16}\/)?file$/.test(partPath))
+  // Real Plex Part.key values end in file.mkv, file.mp4, etc. Some older
+  // servers return bare /file. Accept only these concrete media endpoints;
+  // never accept arbitrary Plex paths or caller-supplied URL parameters.
+  if (!/^\/library\/parts\/\d{1,16}\/(?:\d{1,16}\/)?file(?:\.[a-z0-9]{1,8})?$/i.test(partPath))
     throw Error('Plex media has no directly playable file');
   const hub = items.find(entry => entry.ratingKey === ratingKey);
   const details = {
@@ -427,7 +430,7 @@ async function plexPlaybackDetails(ratingKey) {
 async function servePlexVideo(req, res, ratingKey) {
   const details = await plexPlaybackDetails(ratingKey);
   const range = req.headers.range;
-  if (range && !/^bytes=\d+-\d*$/.test(range))
+  if (range && !/^bytes=(?:\d+-\d*|-\d+)$/.test(range))
     return send(res, 416, { error: 'Unsupported byte range' });
   const upstreamUrl = new URL(details.partPath, plexUrl + '/');
   const controller = new AbortController();
