@@ -446,6 +446,16 @@
     .app-shell .backdrop{z-index:0;transform:none}
     .app-shell .noise{z-index:1;opacity:.07}
     .app-shell>.wrap{position:relative;z-index:2}
+    /* AVPlay is a hardware video plane behind Tizen's HTML surface. When it is
+       active, the root canvas, app shell and static poster must be transparent.
+       Merely giving the <object> a higher CSS z-index cannot reveal it. */
+    html.native-wallpaper-active,html.native-wallpaper-active body,
+    html.native-wallpaper-active .app-shell{background:transparent!important;background-color:transparent!important;background-image:none!important}
+    html.native-wallpaper-active .app-shell .backdrop,
+    html.native-wallpaper-active .app-shell .backdrop.mode-cinema,
+    html.native-wallpaper-active .app-shell .backdrop.mode-live{background:transparent!important;background-image:none!important;background-color:transparent!important}
+    html.native-wallpaper-active .app-shell .wallpaper-video{visibility:hidden!important}
+    .wallpaper-playback-notice{margin-top:10px;max-width:540px;border:1px solid rgba(255,197,175,.55);border-radius:12px;padding:7px 12px;background:rgba(53,22,19,.75);color:#fff0e8;font:600 11px/1.4 'DM Sans',Arial,sans-serif;letter-spacing:0}
     .backdrop:after{background:linear-gradient(180deg,rgba(6,12,22,.35) 0%,rgba(6,12,22,.02) 31%,rgba(6,12,22,.14) 54%,rgba(6,12,22,.77) 83%,rgba(6,12,22,.87) 100%)}
     .wrap{padding:clamp(15px,2vh,29px) clamp(27px,3.3vw,72px) 12px}
     .topbar{height:66px;gap:16px;padding:0 19px;border:1px solid rgba(255,255,255,.23);border-radius:24px;background:rgba(14,25,39,.33);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:inset 0 1px rgba(255,255,255,.13),0 14px 40px #0003}
@@ -466,6 +476,8 @@
     #view-home .content-zone>.section-head{order:0;margin:0 4px 7px;align-items:center}
     #view-home .content-zone>.section-head h2{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#e9f1f7}
     #view-home .app-strip{order:1;display:flex;justify-content:center;align-items:center;gap:clamp(10px,1.2vw,21px);width:max-content;max-width:100%;margin:0 auto 15px;padding:11px 17px;border:1px solid rgba(255,255,255,.28);border-radius:26px;background:rgba(25,37,51,.36);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:inset 0 1px rgba(255,255,255,.2),0 14px 44px #0004}
+    /* Keep the persistent camera feed on the far-right side of the TV,
+       clear of the clock while retaining the overlay controls. */
     .camera-pip.pos-under-button:not(.is-fullscreen){width:clamp(420px,29vw,560px);max-width:calc(100vw - 24px)}
     #view-home .app-strip .app-tile{height:clamp(77px,9vh,105px);width:clamp(95px,8.5vw,145px);flex:none;border-radius:20px;background:linear-gradient(155deg,rgba(255,255,255,.2),rgba(255,255,255,.055));border-color:rgba(255,255,255,.24)}
     #view-home .app-strip .tile-name{bottom:8px;left:10px;font-size:10px}
@@ -509,7 +521,7 @@
       <div class="top-actions"><button data-tv-focus class="weather-chip" id="weatherButton" title="Weather settings"><svg><use href="#i-sun"/></svg><span class="weather-value" id="weatherTemp">--°</span><span class="weather-city" id="weatherCity">Loading weather</span></button><div class="top-divider"></div><button data-tv-focus class="round" id="cameraButton" aria-label="Toggle camera dropdown" aria-controls="cameraPip" aria-expanded="false" aria-pressed="false" title="Toggle cameras"><svg><use href="#i-camera"/></svg></button><button data-tv-focus class="round" id="searchButton" aria-label="Search apps"><svg><use href="#i-search"/></svg></button><button data-tv-focus class="round" id="settingsButton" aria-label="Open settings"><svg><use href="#i-settings"/></svg></button></div>
     </header>
     <main class="view active" id="view-home">
-      <section class="hero hero-clean lock-screen-hero"><div class="lock-screen-center"><div class="lock-screen-date" id="dateLabel">TODAY</div><div class="lock-screen-clock" id="clock">--:--</div><div class="lock-screen-greeting" id="lockGreeting">Make yourself at home</div></div></section>
+      <section class="hero hero-clean lock-screen-hero"><div class="lock-screen-center"><div class="lock-screen-date" id="dateLabel">TODAY</div><div class="lock-screen-clock" id="clock">--:--</div><div class="lock-screen-greeting" id="lockGreeting">Make yourself at home</div><div class="wallpaper-playback-notice" id="wallpaperPlaybackNotice" role="status" aria-live="polite" hidden></div></div></section>
       <section class="content-zone"><div class="section-head"><h2>Your favorites</h2><button data-tv-focus class="tiny-btn" id="customizeApps">Customize apps <svg><use href="#i-arrow"/></svg></button></div><div class="app-strip" id="homeApps"></div>
         <div class="dash-grid"><div><div class="section-head"><h2>Pick up where you left off</h2><div class="muted">PLEX LIBRARY · <span class="demo-tag" id="plexBadge">CONNECTING</span></div></div><div class="media-rail" id="plexContinueRail" aria-live="polite"><div class="plex-empty">Connecting to Plex…</div></div></div>
         <div><div class="section-head"><h2>Upcoming releases</h2><button data-tv-focus class="tiny-btn" data-view="media">Media activity <svg><use href="#i-arrow"/></svg></button></div><div class="release-calendar" id="releaseCalendar" aria-label="Upcoming movie and TV release calendar"><div class="release-placeholder">Loading calendar…</div></div></div></div>
@@ -528,7 +540,7 @@
 </div>
 <div class="shade" id="shade"></div>
 <aside class="drawer" id="drawer" aria-label="Dashboard settings" aria-hidden="true">
-  <div class="drawer-head"><div><div class="drawer-title">Settings</div><div class="drawer-sub">Mi Kasa v0.1.13 · Home layout & camera placement</div></div><button class="close-btn" id="closeSettings" aria-label="Close settings" data-tv-focus><svg><use href="#i-close"/></svg></button></div>
+  <div class="drawer-head"><div><div class="drawer-title">Settings</div><div class="drawer-sub">Mi Kasa v0.1.14 · Tizen AVPlay transparency</div></div><button class="close-btn" id="closeSettings" aria-label="Close settings" data-tv-focus><svg><use href="#i-close"/></svg></button></div>
   <div class="drawer-body">
     <section class="settings-section wallpaper-settings" aria-labelledby="wallpaperSettingsTitle">
       <div class="wallpaper-heading"><h3 id="wallpaperSettingsTitle">Wallpaper & appearance</h3><span class="settings-live-label">TV DISPLAY</span></div>
@@ -1235,6 +1247,7 @@
   let nativeWallpaperGeneration=0,nativeWallpaperRequested='',nativeWallpaperReady=false,nativeWallpaperFailedSource='';
   let nativeWallpaperFailedAt=0,nativeWallpaperAttemptedSource='',wallpaperLastProgress=Date.now(),wallpaperLastTime=-1;
   let nativeWallpaperLastProgress=Date.now(),nativeWallpaperLastTime=-1;
+  function wallpaperNotice(message){const label=$('wallpaperPlaybackNotice');label.textContent=message||'';label.hidden=!message}
   const nativeWallpaperApi=()=>typeof window.tizen!=='undefined'&&window.webapis&&window.webapis.avplay||null;
   function wallpaperMediaURL(source){
     if(!/^media\/[a-z0-9][a-z0-9._-]*\.mp4$/i.test(source))return source;
@@ -1262,6 +1275,7 @@
     }
     nativeWallpaperReady=false;
     $('wallpaperSurface').classList.remove('use-native-player');
+    document.documentElement.classList.remove('native-wallpaper-active');
   }
   function stopNativeWallpaper(){nativeWallpaperGeneration++;nativeWallpaperRequested='';closeNativeWallpaper()}
   function tryNativeWallpaper(video,moving){
@@ -1289,7 +1303,9 @@
       nativeWallpaperRequested='';closeNativeWallpaper();
       if(cinemaSelected())setCinemaPlaybackStatus('Samsung video decoder failed · trying HTML5');
       else $('wallpaperLoadStatus').textContent='LIVE · decoder failed · trying HTML5';
-      // Fall back to the local asset if the bridge is unreachable.
+      wallpaperNotice('TV video decoder could not start. Trying packaged HTML5 video.');
+      // If the LAN bridge is unavailable, let HTML5 retry the packaged
+      // relative asset instead of remaining stuck on an unreachable HTTP URL.
       if(/^https?:\/\//i.test(source)&&/^media\/[a-z0-9][a-z0-9._-]*\.mp4$/i.test(logical)){
         video.pause();video.setAttribute('src',logical);video.load();
       }
@@ -1303,6 +1319,7 @@
         // The avplayer object must exist as a visible display surface before
         // preparing native playback, not only after play() succeeds.
         $('wallpaperSurface').classList.add('use-native-player');
+        document.documentElement.classList.add('native-wallpaper-active');
         api.open(candidates[index]);
         api.setDisplayRect(0,0,1920,1080);
         api.setDisplayMethod('PLAYER_DISPLAY_MODE_LETTER_BOX');
@@ -1337,6 +1354,7 @@
             $('wallpaperSurface').classList.add('use-native-player');
             video.pause();
             if(cinemaSelected())setCinemaPlaybackStatus('TV DECODER · playing native video');
+            wallpaperNotice('');
             setTimeout(()=>{
               if(generation!==nativeWallpaperGeneration||nativeWallpaperRequested!==source)return;
               if(Date.now()-nativeWallpaperLastProgress>10000)attempt(index+1);
@@ -1405,6 +1423,7 @@
     const position=wallpaperVideo.currentTime;
     if(Number.isFinite(position)&&Math.abs(position-wallpaperLastTime)>.2){
       wallpaperLastTime=position;wallpaperLastProgress=Date.now();
+      wallpaperNotice('');
       if(settings.wallpaperId.startsWith('live-')&&wallpaperVideo.getAttribute('src'))
         $('wallpaperLoadStatus').textContent='LIVE VIDEO · HTML5 · '+Math.floor(position)+'s';
     }
@@ -1431,6 +1450,7 @@
     }
     if(selected.kind==='live'){
       $('wallpaperLoadStatus').textContent='LIVE VIDEO NOT ADVANCING · '+source;
+      wallpaperNotice('Live video stalled on this TV · '+(nativeWallpaperApi()?'native and HTML5 playback attempted':'native AVPlay API unavailable'));
       return;
     }
     cinemaLastAdvance=Date.now();cinemaStallRecoveries++;
@@ -1444,6 +1464,7 @@
       else startWallpaperVideo(wallpaperVideo,true);
     }else{
       setCinemaPlaybackStatus('VIDEO NOT ADVANCING ON THIS TV · select another reel or press Play');
+      wallpaperNotice('Cinema video stalled on this TV · open Settings for playback status');
     }
   },3500);
   wallpaperVideo.addEventListener('pause',()=>{if(cinemaSelected()&&!nativeWallpaperRequested){$('cinemaPlay').textContent='Play video';if(!document.hidden)setCinemaPlaybackStatus('PAUSED · Press Play video to resume')}});
@@ -1455,6 +1476,8 @@
   });
   wallpaperVideo.addEventListener('error',()=>{
     const failedSource=wallpaperVideo.getAttribute('src')||'';
+    const errorCode=wallpaperVideo.error?.code;
+    wallpaperNotice('Video load error '+(errorCode||'unknown')+' · '+(failedSource.split('/').pop()||'media'));
     if(settings.wallpaperMotion&&failedSource!==nativeWallpaperAttemptedSource&&tryNativeWallpaper(wallpaperVideo,true)){
       if(cinemaSelected())setCinemaPlaybackStatus('HTML5 ERROR · trying Samsung decoder');
       else $('wallpaperLoadStatus').textContent='LIVE · HTML5 error · trying Samsung decoder';
