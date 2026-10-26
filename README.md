@@ -1,9 +1,33 @@
 # Mi Kasa — Samsung Tizen TV Dashboard
 
-Samsung Tizen home dashboard with an iPhone-inspired lock screen, Live/Cinema video wallpaper, Plex resume, release calendar and LAN cameras.
+Mi Kasa is a Samsung Tizen launcher with an iPhone-inspired lock screen, interactive app dock, Plex Continue Watching/resume, security camera widget, movie calendar, and Live/Cinema video wallpaper.
 
-**Current version: 0.1.12**
+**Version 0.1.12 — Lock screen + TV video playback fixes**
 
-The complete v0.1.12 source and bundled footage are available in the release archive shared in the project conversation. The full application includes `MiKasa/` and `LAN-Bridge/`.
+- [Download full v0.1.12 source with all MP4 videos](https://chatgpt.com/library?file_id=libfile_5fbb9075e9d88191aa66fb6b1f708af7&account_id=personal)
+- [Download smaller v0.1.12 source hotfix](https://chatgpt.com/library?file_id=libfile_071f835130388191b29557e4fbd199f8&account_id=personal)
+- [Physical TV video validation checklist](https://github.com/andres00567/Samsung_Dashboard_MiKasa/issues/1)
 
-Video fixes include the Samsung-native HTTP playback path, HTTP HEAD and byte-range support, and corrected wallpaper stacking. Physical-device validation is still required.
+## Repository
+
+- `MiKasa/index.html` — dashboard UI and TV video player.
+- `MiKasa/config.xml` — Tizen application manifest.
+- `LAN-Bridge/server.mjs` — local Plex, camera, news and MP4 media server.
+- `LAN-Bridge/test-*.mjs` — runtime/regression checks.
+
+The original MP4/JPG bundles are **included in the full release ZIP**, but have not yet been uploaded into this GitHub repository because the repository's authenticated upload method is not configured for large binary assets. Extract the full ZIP before opening the application in Tizen Studio.
+
+## Installation
+
+Open `MiKasa/` in Tizen Studio; package with your existing signing profile and install to the connected TV. Run `node server.mjs` from `LAN-Bridge/` (Node 20+) and configure the app's LAN bridge address to the computer's LAN IP, not `localhost`.
+
+Keep bridge credentials in an untracked `.env`; never port-forward the bridge to the public Internet.
+
+## Tests
+
+```bash
+node LAN-Bridge/test-media.mjs
+node --test LAN-Bridge/test-plex.mjs LAN-Bridge/test-cameras.mjs LAN-Bridge/test-camera-pool.mjs
+```
+
+The bridge's HTTP HEAD/range requests and existing Plex/camera tests have passed locally. **Physical Tizen video playback is not yet confirmed.**
