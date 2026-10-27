@@ -1511,94 +1511,10 @@
     }
     closeNativeWallpaper();
   }
-  function tryNativeWallpaper(video,moving){
-    // Never compete with Plex's hardware video plane for wallpapers.
+  function tryNativeWallpaper(){
+    // Native AVPlay is reserved for foreground Plex. Moving backgrounds are
+    // rendered in the HTML compositor, never in the hardware video plane.
     return false;
-    if(plexPlayback)return false;
-    const api=nativeWallpaperApi();
-    const source=video.getAttribute('src')||'';
-    const logical=video.dataset.mediaSource||source;
-    if(!api||!/^media\/[a-z0-9][a-z0-9._-]*\.mp4$/i.test(logical))return false;
-    if(logical===nativeWallpaperFailedSource&&Date.now()-nativeWallpaperFailedAt<60000)return false;
-    if(!moving){stopNativeWallpaper();video.pause();return true}
-    if(nativeWallpaperRequested===source)return true;
-    nativeWallpaperAttemptedSource=source;
-    stopNativeWallpaper();
-    nativeWallpaperRequested=source;
-    const generation=nativeWallpaperGeneration;
-    const candidates=[];
-    // Prefer the bridge's HTTP URL on Samsung hardware, then the packaged
-    // media URI if the local bridge cannot supply the asset.
-    if(/^https?:\/\//i.test(source))candidates.push(source);
-    try{const host=lanEndpoint('health');if(host){const url=new URL(logical,new URL(host).origin+'/').href;if(!candidates.includes(url))candidates.push(url)}}catch{}
-    try{const packaged=new URL(logical,document.baseURI).href;if(!candidates.includes(packaged))candidates.push(packaged)}catch{}
-    const failed=()=>{
-      if(generation!==nativeWallpaperGeneration)return;
-      nativeWallpaperFailedSource=logical;nativeWallpaperFailedAt=Date.now();
-      nativeWallpaperRequested='';closeNativeWallpaper();
-      if(cinemaSelected())setCinemaPlaybackStatus('Samsung video decoder failed · trying HTML5');
-      else $('wallpaperLoadStatus').textContent='LIVE · decoder failed · trying HTML5';
-      wallpaperNotice('TV video decoder could not start. Trying packaged HTML5 video.');
-      // If the LAN bridge is unavailable, let HTML5 retry the packaged
-      // relative asset instead of remaining stuck on an unreachable HTTP URL.
-      if(/^https?:\/\//i.test(source)&&/^media\/[a-z0-9][a-z0-9._-]*\.mp4$/i.test(logical)){
-        video.pause();video.setAttribute('src',logical);video.load();
-      }
-      const fallback=video.play();if(fallback&&typeof fallback.catch==='function')fallback.catch(()=>{});
-    };
-    const attempt=index=>{
-      if(generation!==nativeWallpaperGeneration)return;
-      if(index>=candidates.length){failed();return}
-      closeNativeWallpaper();
-      try{
-        // The avplayer object must exist as a visible display surface before
-        // preparing native playback, not only after play() succeeds.
-        $('wallpaperSurface').classList.add('use-native-player');
-        document.documentElement.classList.add('native-wallpaper-active');
-        api.open(candidates[index]);
-        api.setDisplayRect(0,0,1920,1080);
-        api.setDisplayMethod('PLAYER_DISPLAY_MODE_LETTER_BOX');
-        api.setListener({
-          oncurrentplaytime:time=>{
-            if(generation!==nativeWallpaperGeneration)return;
-            if(Number.isFinite(time)&&time>nativeWallpaperLastTime+100){
-              nativeWallpaperLastTime=time;nativeWallpaperLastProgress=Date.now();
-            }
-            if(cinemaSelected())setCinemaPlaybackStatus('TV DECODER · '+Math.floor(time/1000)+'s · native playback');
-            else $('wallpaperLoadStatus').textContent='LIVE VIDEO · Samsung decoder · '+Math.floor(time/1000)+'s';
-          },
-          onstreamcompleted:()=>{
-            if(generation!==nativeWallpaperGeneration)return;
-            stopNativeWallpaper();
-            if(cinemaSelected()&&settings.cinemaMode!=='single')nextCinemaClip();
-            else startWallpaperVideo(video,true);
-          },
-          onerror:error=>{
-            if(generation!==nativeWallpaperGeneration)return;
-            const message=String(error||'decoder error').slice(0,80);
-            if(cinemaSelected())setCinemaPlaybackStatus('TV decoder '+message+' · retrying');
-            else $('wallpaperLoadStatus').textContent='LIVE · TV decoder '+message+' · retrying';
-            attempt(index+1);
-          }
-        });
-        api.prepareAsync(()=>{
-          if(generation!==nativeWallpaperGeneration)return;
-          try{
-            api.play();nativeWallpaperReady=true;
-            nativeWallpaperLastProgress=Date.now();nativeWallpaperLastTime=-1;
-            $('wallpaperSurface').classList.add('use-native-player');
-            video.pause();
-            if(cinemaSelected())setCinemaPlaybackStatus('TV DECODER · playing native video');
-            wallpaperNotice('');
-            setTimeout(()=>{
-              if(generation!==nativeWallpaperGeneration||nativeWallpaperRequested!==source)return;
-              if(Date.now()-nativeWallpaperLastProgress>10000)attempt(index+1);
-            },11000);
-          }catch{attempt(index+1)}
-        },()=>attempt(index+1));
-      }catch{attempt(index+1)}
-    };
-    video.pause();attempt(0);return true;
   }
   function startWallpaperVideo(video,moving,preferNative=false){
     if(plexPlayback&&!plexPlayback.parked){video.pause();return}
