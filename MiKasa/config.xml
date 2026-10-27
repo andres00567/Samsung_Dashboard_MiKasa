@@ -2,7 +2,7 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:tizen="http://tizen.org/ns/widgets"
         id="https://andres.local/tvhome"
-        version="0.1.16"
+        version="0.1.17"
         viewmodes="fullscreen">
   <tizen:application id="TVHm26Andr.TVHome"
                      package="TVHm26Andr"
@@ -15,6 +15,7 @@
   <tizen:privilege name="http://tizen.org/privilege/internet" />
   <tizen:privilege name="http://tizen.org/privilege/application.info" />
   <tizen:privilege name="http://tizen.org/privilege/application.launch" />
+  <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice" />
   <!-- User-configured cameras, wallpaper URLs and LAN feed hosts require
        network access beyond a fixed list. Credentials remain server-side. -->
   <access origin="*" subdomains="true" />
