@@ -2,7 +2,7 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:tizen="http://tizen.org/ns/widgets"
         id="https://andres.local/tvhome"
-        version="0.1.17"
+        version="0.1.18"
         viewmodes="fullscreen">
   <tizen:application id="TVHm26Andr.TVHome"
                      package="TVHm26Andr"
