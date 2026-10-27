@@ -434,6 +434,18 @@
       background:transparent!important;background-color:transparent!important;background-image:none!important;
     }
     html.native-plex-active .app-shell .wallpaper-video{visibility:hidden!important}
+    /* AVPlay draws under the HTML compositor. The launcher must disappear
+       while Plex owns that hardware plane; only its transport HUD stays on
+       top. Hiding the whole body would also hide the playback controls. */
+    html.plex-session-active .app-shell,
+    html.plex-session-active .camera-pip,
+    html.plex-session-active .camera-notice,
+    html.plex-session-active .music-mini,
+    html.plex-session-active .drawer,
+    html.plex-session-active .shade,
+    html.plex-session-active .search-overlay{visibility:hidden!important;pointer-events:none!important}
+    html.plex-session-active #plexPlayer{visibility:visible!important;pointer-events:auto!important}
+    html.plex-session-active #plexPlayer .plex-player-glass{visibility:visible!important}
     .plex-player-glass{position:absolute;z-index:2;left:clamp(20px,4vw,80px);right:clamp(20px,4vw,80px);bottom:clamp(20px,3vh,42px);padding:16px 20px 13px;border-radius:19px;border:1px solid #e3f7ff41;background:rgba(8,20,35,.76);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);box-shadow:0 12px 48px #0009}
     .plex-player-top{display:flex;justify-content:space-between;align-items:center;gap:20px}
     .plex-player-title{min-width:0;font:800 clamp(16px,1.2vw,23px)/1.3 'Manrope',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -608,7 +620,7 @@
 <div class="music-mini" id="musicMini" hidden><span id="musicMiniTitle">Music</span><button data-tv-focus id="musicMiniToggle">Pause</button><button data-tv-focus id="musicMiniWindows">Windows</button></div>
 <div class="shade" id="shade"></div>
 <aside class="drawer" id="drawer" aria-label="Dashboard settings" aria-hidden="true">
-  <div class="drawer-head"><div><div class="drawer-title">Settings</div><div class="drawer-sub">Mi Kasa v0.1.16 · embedded workspace</div></div><button class="close-btn" id="closeSettings" aria-label="Close settings" data-tv-focus><svg><use href="#i-close"/></svg></button></div>
+  <div class="drawer-head"><div><div class="drawer-title">Settings</div><div class="drawer-sub">Mi Kasa v0.1.17 · Plex foreground playback</div></div><button class="close-btn" id="closeSettings" aria-label="Close settings" data-tv-focus><svg><use href="#i-close"/></svg></button></div>
   <div class="drawer-body">
     <section class="settings-section wallpaper-settings" aria-labelledby="wallpaperSettingsTitle">
       <div class="wallpaper-heading"><h3 id="wallpaperSettingsTitle">Wallpaper & appearance</h3><span class="settings-live-label">TV DISPLAY</span></div>
@@ -698,6 +710,18 @@
     };
   }
   const $=id=>document.getElementById(id);
+  // Samsung delivers media-button key events only after tvinputdevice
+  // registration. D-pad/Enter/Back are mandatory keys and need no registration.
+  function registerPlexRemoteKeys(){
+    const device=window.tizen&&window.tizen.tvinputdevice;
+    if(!device)return;
+    const keys=['MediaPlayPause','MediaPlay','MediaPause','MediaRewind','MediaFastForward','MediaStop'];
+    try{
+      if(typeof device.registerKeyBatch==='function'){device.registerKeyBatch(keys);return}
+    }catch(error){console.warn('Samsung media key batch registration failed:',error.message)}
+    keys.forEach(key=>{try{device.registerKey(key)}catch(error){console.warn('Media remote key unavailable:',key,error.message)}});
+  }
+  registerPlexRemoteKeys();
   const defaultApps=[
     {id:'plex',name:'Plex',mark:'›',style:'plex'},
     {id:'netflix',name:'Netflix',mark:'N',style:'netflix'},
@@ -1015,6 +1039,7 @@
     if(report)plexReportProgress('stopped',playing);
     plexPlaybackGeneration++;plexStopPlayback();plexPlayback=null;
     $('plexPlayer').hidden=true;
+    document.documentElement.classList.remove('plex-session-active');
     if(plexPlayerLastFocus?.focus)plexPlayerLastFocus.focus();
     applyWallpaper();loadPlexContinue();
   }
@@ -1143,6 +1168,7 @@
         timeMs:Math.max(0,Math.floor(details.resumeMs||item.viewOffsetMs||0)),
         durationMs:Math.max(0,Math.floor(details.durationMs||item.durationMs||0)),
         paused:true,native:false,sourceUrl:new URL(details.streamUrl,new URL(endpoint).origin).href};
+      document.documentElement.classList.add('plex-session-active');
       $('plexPlayer').hidden=false;
       $('plexPlayerTitle').textContent=item.type==='episode'?((item.showTitle||'Series')+' — '+item.title):item.title;
       $('plexPause').textContent='Play';
@@ -2188,8 +2214,9 @@
   document.querySelectorAll('[data-scene]').forEach(btn=>btn.onclick=()=>toggleScene(btn));
   document.addEventListener('keydown',e=>{
     // Samsung sometimes sends keyCode with an empty or unidentified key name.
-    const keyNames={37:'ArrowLeft',38:'ArrowUp',39:'ArrowRight',40:'ArrowDown',13:'Enter',27:'Escape',10009:'Back'};
-    const key=(e.key&&e.key!=='Unidentified')?e.key:(keyNames[e.keyCode]||'');
+    const keyNames={37:'ArrowLeft',38:'ArrowUp',39:'ArrowRight',40:'ArrowDown',13:'Enter',27:'Escape',10009:'Back',
+      10252:'MediaPlayPause',415:'MediaPlay',19:'MediaPause',412:'MediaRewind',417:'MediaFastForward',413:'MediaStop'};
+    const key=keyNames[e.keyCode]||((e.key&&e.key!=='Unidentified')?e.key:'');
     const tag=document.activeElement&&document.activeElement.tagName;
     if(plexResumeLoading&&(key==='Escape'||key==='Back'||key==='Backspace')){
       plexPlaybackGeneration++;plexResumeController?.abort();plexResumeController=null;
@@ -2197,6 +2224,12 @@
     }
     if(!$('plexPlayer').hidden){
       if(key==='Escape'||key==='Back'||key==='Backspace')closePlexPlayer();
+      else if(key==='MediaStop')closePlexPlayer();
+      else if(key==='MediaPlayPause')plexTogglePause();
+      else if(key==='MediaPlay'){if(plexPlayback?.paused)plexTogglePause()}
+      else if(key==='MediaPause'){if(plexPlayback&&!plexPlayback.paused)plexTogglePause()}
+      else if(key==='MediaRewind')plexSeek(-10000);
+      else if(key==='MediaFastForward')plexSeek(30000);
       else if(key==='ArrowLeft'||key==='ArrowRight')moveFocus(key);
       else if(key==='Enter'){
         const active=document.activeElement;
@@ -2204,7 +2237,7 @@
         else plexTogglePause();
       }else if(key==='ArrowUp'||key==='ArrowDown')moveFocus(key);
       else return;
-      e.preventDefault();return;
+      e.preventDefault();e.stopPropagation();return;
     }
     if(currentView==='windows'&&(key==='Escape'||key==='Back'||key==='Backspace')){
       const expanded=hostedWindows.find(entry=>entry.card.classList.contains('maximized'));
