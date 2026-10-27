@@ -460,6 +460,7 @@
     .plex-player-buttons button:focus-visible{background:#b8efde40}
     .wallpaper-motion-image{display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none;z-index:3}
     .backdrop.has-live-motion .wallpaper-motion-image{display:block}
+    .backdrop.mode-cinema.cinema-original .wallpaper-motion-image{object-fit:contain;background:#090a0a}
     .backdrop.has-live-motion .wallpaper-video{display:none!important}
     .backdrop.mode-live:not(.has-live-motion) .live-art{z-index:3;mix-blend-mode:normal}
     .backdrop.mode-live:not(.has-live-motion) .live-canvas{z-index:4}
@@ -1070,15 +1071,14 @@
     document.documentElement.classList.remove('plex-session-active','native-plex-active');
     $('plexResumeDock').hidden=false;
     $('plexDockTitle').textContent='Plex paused · '+playing.title;
-    if(plexPlayerLastFocus?.isConnected)plexPlayerLastFocus.focus();
-    else $('plexDockResume').focus();
+    $('plexDockResume').focus();
     applyWallpaper();
   }
   function resumeParkedPlex(){
     const playing=plexPlayback;if(!playing||!playing.parked)return;
     playing.parked=false;
     $('plexResumeDock').hidden=true;
-    stopNativeWallpaper();wallpaperVideo.pause();
+    stopNativeWallpaper();clearAnimatedWallpaper();wallpaperVideo.pause();
     $('plexPlayer').hidden=false;
     document.documentElement.classList.add('plex-session-active');
     if(playing.native)document.documentElement.classList.add('native-plex-active');
@@ -2350,6 +2350,9 @@
       else return;
       e.preventDefault();e.stopPropagation();return;
     }
+    if(plexPlayback?.parked&&(key==='Escape'||key==='Back'||key==='Backspace')){
+      closePlexPlayer();e.preventDefault();return;
+    }
     if(currentView==='windows'&&(key==='Escape'||key==='Back'||key==='Backspace')){
       const expanded=hostedWindows.find(entry=>entry.card.classList.contains('maximized'));
       if(expanded){
@@ -2670,6 +2673,9 @@
       if(event.keyCode!==10009)return; // Samsung Smart Remote: Return / Back
       if(!$('plexPlayer').hidden){
         event.preventDefault();event.stopImmediatePropagation();parkPlexPlayer();return;
+      }
+      if(plexPlayback?.parked){
+        event.preventDefault();event.stopImmediatePropagation();closePlexPlayer();return;
       }
       event.preventDefault();event.stopImmediatePropagation();
       if(!$('searchOverlay').hidden)closeSearch();
