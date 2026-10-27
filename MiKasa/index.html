@@ -446,6 +446,11 @@
     html.plex-session-active .search-overlay{visibility:hidden!important;pointer-events:none!important}
     html.plex-session-active #plexPlayer{visibility:visible!important;pointer-events:auto!important}
     html.plex-session-active #plexPlayer .plex-player-glass{visibility:visible!important}
+    .plex-resume-dock{position:fixed;z-index:210;left:50%;bottom:92px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;min-width:365px;max-width:90vw;padding:13px 17px;border:1px solid #b8efde90;border-radius:16px;background:#102438f5;box-shadow:0 18px 55px #000c}
+    .plex-resume-dock[hidden]{display:none!important}
+    .plex-resume-dock span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:800}
+    .plex-resume-dock button{flex:none;min-height:40px;padding:8px 14px;border:1px solid #b8efde85;border-radius:10px;background:#b8efde;color:#102b24;font-size:11px;font-weight:800}
+    .plex-resume-dock button:last-child{background:#ffffff18;color:#fff;border-color:#ffffff45}
     .plex-player-glass{position:absolute;z-index:2;left:clamp(20px,4vw,80px);right:clamp(20px,4vw,80px);bottom:clamp(20px,3vh,42px);padding:16px 20px 13px;border-radius:19px;border:1px solid #e3f7ff41;background:rgba(8,20,35,.76);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);box-shadow:0 12px 48px #0009}
     .plex-player-top{display:flex;justify-content:space-between;align-items:center;gap:20px}
     .plex-player-title{min-width:0;font:800 clamp(16px,1.2vw,23px)/1.3 'Manrope',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -453,6 +458,11 @@
     .plex-player-buttons{display:flex;align-items:center;gap:9px;flex:none}
     .plex-player-buttons button{min-width:60px;height:42px;border:1px solid #d4f9f049;border-radius:10px;background:#ffffff19;color:white;font-size:12px;font-weight:800;padding:0 12px}
     .plex-player-buttons button:focus-visible{background:#b8efde40}
+    .wallpaper-motion-image{display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none;z-index:3}
+    .backdrop.has-live-motion .wallpaper-motion-image{display:block}
+    .backdrop.has-live-motion .wallpaper-video{display:none!important}
+    .backdrop.mode-live:not(.has-live-motion) .live-art{z-index:3;mix-blend-mode:normal}
+    .backdrop.mode-live:not(.has-live-motion) .live-canvas{z-index:4}
     .plex-player-progress{height:4px;background:#d3e8ed35;overflow:hidden;border-radius:8px;margin:13px 0 8px}
     .plex-player-progress i{display:block;height:100%;width:0;background:#b8efde}
     .plex-player-bottom{display:flex;justify-content:space-between;color:#bfd0dc;font-size:11px;gap:12px}
@@ -584,7 +594,7 @@
   <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
 </defs></svg>
 <div class="app-shell" id="app">
-  <div class="backdrop" id="wallpaperSurface"><img id="wallpaperImage" class="wallpaper-image" alt="" aria-hidden="true"><div class="live-art" id="liveArt"><span class="live-glow-a"></span><span class="live-glow-b"></span><span class="live-sweep"></span><div class="live-scene" id="liveSceneParticles"></div><canvas id="liveCanvas" class="live-canvas" width="960" height="540" aria-hidden="true"></canvas></div><object id="nativeWallpaperPlayer" class="native-wallpaper-player" type="application/avplayer" aria-hidden="true"></object><video id="wallpaperVideo" class="wallpaper-video" autoplay loop muted playsinline webkit-playsinline preload="auto" aria-hidden="true"></video></div><div class="noise"></div>
+  <div class="backdrop" id="wallpaperSurface"><img id="wallpaperImage" class="wallpaper-image" alt="" aria-hidden="true"><div class="live-art" id="liveArt"><span class="live-glow-a"></span><span class="live-glow-b"></span><span class="live-sweep"></span><div class="live-scene" id="liveSceneParticles"></div><canvas id="liveCanvas" class="live-canvas" width="960" height="540" aria-hidden="true"></canvas></div><object id="nativeWallpaperPlayer" class="native-wallpaper-player" type="application/avplayer" aria-hidden="true"></object><video id="wallpaperVideo" class="wallpaper-video" autoplay loop muted playsinline webkit-playsinline preload="auto" aria-hidden="true"></video><img id="wallpaperMotionImage" class="wallpaper-motion-image" alt="" aria-hidden="true"></div><div class="noise"></div>
   <div class="wrap">
     <header class="topbar">
       <div class="brand"><span class="brand-mark"><svg><use href="#i-home"/></svg></span><div class="brand-word">Mi Kasa</div></div>
@@ -620,7 +630,7 @@
 <div class="music-mini" id="musicMini" hidden><span id="musicMiniTitle">Music</span><button data-tv-focus id="musicMiniToggle">Pause</button><button data-tv-focus id="musicMiniWindows">Windows</button></div>
 <div class="shade" id="shade"></div>
 <aside class="drawer" id="drawer" aria-label="Dashboard settings" aria-hidden="true">
-  <div class="drawer-head"><div><div class="drawer-title">Settings</div><div class="drawer-sub">Mi Kasa v0.1.17 · Plex foreground playback</div></div><button class="close-btn" id="closeSettings" aria-label="Close settings" data-tv-focus><svg><use href="#i-close"/></svg></button></div>
+  <div class="drawer-head"><div><div class="drawer-title">Settings</div><div class="drawer-sub">Mi Kasa v0.1.18 · Plex navigation + offline moving backgrounds</div></div><button class="close-btn" id="closeSettings" aria-label="Close settings" data-tv-focus><svg><use href="#i-close"/></svg></button></div>
   <div class="drawer-body">
     <section class="settings-section wallpaper-settings" aria-labelledby="wallpaperSettingsTitle">
       <div class="wallpaper-heading"><h3 id="wallpaperSettingsTitle">Wallpaper & appearance</h3><span class="settings-live-label">TV DISPLAY</span></div>
@@ -687,14 +697,16 @@
         <button id="plexRewind" data-tv-focus title="Back 10 seconds">−10s</button>
         <button id="plexPause" data-tv-focus title="Pause or resume">Pause</button>
         <button id="plexForward" data-tv-focus title="Ahead 30 seconds">+30s</button>
+        <button id="plexDashboard" data-tv-focus title="Pause Plex and return to Mi Kasa">⌂ Dashboard</button>
         <button id="plexOpenApp" data-tv-focus title="Open the installed Plex app">Plex app</button>
-        <button id="plexPlayerClose" data-tv-focus title="Return to Mi Kasa">✕ Exit</button>
+        <button id="plexPlayerClose" data-tv-focus title="Stop playback and close Plex">✕ Close</button>
       </div>
     </div>
     <div class="plex-player-progress"><i id="plexPlayerProgress"></i></div>
-    <div class="plex-player-bottom"><span id="plexPlayerTime">00:00 / 00:00</span><span>← / → choose a control · OK activate · Back exit</span></div>
+    <div class="plex-player-bottom"><span id="plexPlayerTime">00:00 / 00:00</span><span>← / → choose · OK activate · Back goes to dashboard</span></div>
   </div>
 </section>
+<div class="plex-resume-dock" id="plexResumeDock" hidden role="region" aria-label="Paused Plex session"><span id="plexDockTitle">Plex paused</span><button id="plexDockResume" data-tv-focus>▶ Resume Plex</button><button id="plexDockClose" data-tv-focus>✕ Close Plex</button></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
   'use strict';
@@ -1040,8 +1052,43 @@
     plexPlaybackGeneration++;plexStopPlayback();plexPlayback=null;
     $('plexPlayer').hidden=true;
     document.documentElement.classList.remove('plex-session-active');
+    $('plexResumeDock').hidden=true;
     if(plexPlayerLastFocus?.focus)plexPlayerLastFocus.focus();
     applyWallpaper();loadPlexContinue();
+  }
+  function parkPlexPlayer(){
+    const playing=plexPlayback;
+    if(!playing||playing.parked)return;
+    try{
+      if(playing.native){const api=nativeWallpaperApi();if(api&&api.getState()==='PLAYING')api.pause()}
+      else $('plexVideo').pause();
+    }catch(error){console.warn('Plex pause when returning home:',error)}
+    playing.paused=true;playing.parked=true;
+    $('plexPause').textContent='Play';
+    plexReportProgress('paused',playing);
+    $('plexPlayer').hidden=true;
+    document.documentElement.classList.remove('plex-session-active','native-plex-active');
+    $('plexResumeDock').hidden=false;
+    $('plexDockTitle').textContent='Plex paused · '+playing.title;
+    if(plexPlayerLastFocus?.isConnected)plexPlayerLastFocus.focus();
+    else $('plexDockResume').focus();
+    applyWallpaper();
+  }
+  function resumeParkedPlex(){
+    const playing=plexPlayback;if(!playing||!playing.parked)return;
+    playing.parked=false;
+    $('plexResumeDock').hidden=true;
+    stopNativeWallpaper();wallpaperVideo.pause();
+    $('plexPlayer').hidden=false;
+    document.documentElement.classList.add('plex-session-active');
+    if(playing.native)document.documentElement.classList.add('native-plex-active');
+    $('plexPause').focus();
+    try{
+      if(playing.native)nativeWallpaperApi().play();
+      else $('plexVideo').play()?.catch(()=>plexSetStatus('Press Play to resume'));
+      playing.paused=false;$('plexPause').textContent='Pause';
+      plexReportProgress('playing',playing);
+    }catch(error){plexSetStatus('Press Play to resume Plex: '+(error.message||'TV error'))}
   }
   function plexPlaybackFailed(message,generation){
     if(generation!==plexPlaybackGeneration||!plexPlayback)return;
@@ -1164,17 +1211,18 @@
       const details=await response.json();
       if(generation!==plexPlaybackGeneration)return;
       if(!/^\/api\/plex\/stream\/\d{1,16}$/.test(details.streamUrl))throw Error('Invalid Plex stream endpoint');
+      stopNativeWallpaper();wallpaperVideo.pause();
       plexPlayback={ratingKey:item.ratingKey,title:item.title,
         timeMs:Math.max(0,Math.floor(details.resumeMs||item.viewOffsetMs||0)),
         durationMs:Math.max(0,Math.floor(details.durationMs||item.durationMs||0)),
         paused:true,native:false,sourceUrl:new URL(details.streamUrl,new URL(endpoint).origin).href};
       document.documentElement.classList.add('plex-session-active');
+      $('plexResumeDock').hidden=true;
       $('plexPlayer').hidden=false;
       $('plexPlayerTitle').textContent=item.type==='episode'?((item.showTitle||'Series')+' — '+item.title):item.title;
       $('plexPause').textContent='Play';
       plexUpdateProgress(plexPlayback.timeMs);
       plexSetStatus('Starting TV playback…');$('plexPlayerClose').focus();
-      stopNativeWallpaper();wallpaperVideo.pause();
       if(nativeWallpaperApi())plexNativePlayback(generation);
       else plexHTML5Playback(generation);
     }catch(error){
@@ -1203,6 +1251,9 @@
     }catch{plexSetStatus('Cannot toggle playback on this TV.')}
   }
   $('plexPlayerClose').onclick=()=>closePlexPlayer();
+  $('plexDashboard').onclick=parkPlexPlayer;
+  $('plexDockResume').onclick=resumeParkedPlex;
+  $('plexDockClose').onclick=()=>closePlexPlayer();
   $('plexRewind').onclick=()=>plexSeek(-10000);
   $('plexForward').onclick=()=>plexSeek(30000);
   $('plexPause').onclick=plexTogglePause;
@@ -1378,15 +1429,60 @@
   function wallpaperNotice(message){const label=$('wallpaperPlaybackNotice');label.textContent=message||'';label.hidden=!message}
   const nativeWallpaperApi=()=>typeof window.tizen!=='undefined'&&window.webapis&&window.webapis.avplay||null;
   function wallpaperMediaURL(source){
-    if(!/^media\/[a-z0-9][a-z0-9._-]*\.mp4$/i.test(source))return source;
-    // Tizen's packaged widget location isn't guaranteed to be a media URI
-    // accepted by AVPlay. The LAN bridge serves identical assets over HTTP,
-    // including HEAD and byte-range requests used by hardware decoders.
-    if(!nativeWallpaperApi())return source;
-    const endpoint=lanEndpoint('health');
-    if(!endpoint)return source;
-    try{return new URL(source,new URL(endpoint).origin+'/').href}catch{return source}
+    // Always use packaged MP4 for HTML5. The LAN bridge must not be required.
+    return source;
   }
+  const animatedWallpaperFiles={
+    'media/live-christmas.mp4':'media/live-christmas.webp',
+    'media/live-snow.mp4':'media/live-snow.webp',
+    'media/live-car.mp4':'media/live-car.webp',
+    'media/drivein-hotdog-1.mp4':'media/drivein-hotdog-1.webp',
+    'media/drivein-hotdog-2.mp4':'media/drivein-hotdog-2.webp',
+    'media/drivein-snackbar.mp4':'media/drivein-snackbar.webp',
+    'media/drivein-lobby-hd.mp4':'media/drivein-lobby-hd.webp'
+  };
+  const failedAnimatedWallpapers=new Set();
+  let animatedCinemaTimer=null;
+  function clearAnimatedWallpaper(){
+    if(animatedCinemaTimer){clearTimeout(animatedCinemaTimer);animatedCinemaTimer=null}
+    $('wallpaperSurface').classList.remove('has-live-motion');
+    const image=$('wallpaperMotionImage');
+    if(image.hasAttribute('src'))image.removeAttribute('src');
+  }
+  function startAnimatedWallpaper(source){
+    const url=animatedWallpaperFiles[source];
+    if(!url||failedAnimatedWallpapers.has(url)||!settings.wallpaperMotion)return false;
+    const image=$('wallpaperMotionImage');
+    image.dataset.mediaSource=source;
+    if(image.getAttribute('src')!==url)image.src=url;
+    $('wallpaperSurface').classList.add('has-live-motion');
+    $('wallpaperVideo').pause();
+    if(animatedCinemaTimer){clearTimeout(animatedCinemaTimer);animatedCinemaTimer=null}
+    if(cinemaSelected()&&settings.cinemaMode!=='single'){
+      const option=wallpaperOptions.find(item=>item.id===settings.wallpaperId);
+      if(option&&cinemaPlaylist(option).length>1){
+        animatedCinemaTimer=setTimeout(()=>{
+          animatedCinemaTimer=null;
+          if(!plexPlayback&&settings.wallpaperMotion&&cinemaSelected())stepCinemaClip(1);
+        },12000);
+      }
+    }
+    if(cinemaSelected())setCinemaPlaybackStatus('OFFLINE ANIMATION · '+source.split('/').pop());
+    else $('wallpaperLoadStatus').textContent='LIVE ANIMATION · packaged file';
+    return true;
+  }
+  $('wallpaperMotionImage').addEventListener('load',()=>{
+    wallpaperNotice('');
+    if(cinemaSelected())setCinemaPlaybackStatus('PLAYING · offline animated background');
+    else $('wallpaperLoadStatus').textContent='LIVE · offline animation loaded';
+  });
+  $('wallpaperMotionImage').addEventListener('error',()=>{
+    const img=$('wallpaperMotionImage');
+    const bad=img.getAttribute('src');
+    if(bad)failedAnimatedWallpapers.add(bad);
+    clearAnimatedWallpaper();
+    if(!plexPlayback)startWallpaperVideo($('wallpaperVideo'),settings.wallpaperMotion);
+  });
   function setWallpaperVideoSource(video,source){
     const url=wallpaperMediaURL(source);
     video.dataset.mediaSource=source;
@@ -1405,8 +1501,19 @@
     $('wallpaperSurface').classList.remove('use-native-player');
     document.documentElement.classList.remove('native-wallpaper-active');
   }
-  function stopNativeWallpaper(){nativeWallpaperGeneration++;nativeWallpaperRequested='';closeNativeWallpaper()}
+  function stopNativeWallpaper(){
+    nativeWallpaperGeneration++;nativeWallpaperRequested='';
+    if(plexPlayback?.native){
+      nativeWallpaperReady=false;
+      $('wallpaperSurface').classList.remove('use-native-player');
+      document.documentElement.classList.remove('native-wallpaper-active');
+      return;
+    }
+    closeNativeWallpaper();
+  }
   function tryNativeWallpaper(video,moving){
+    // Never compete with Plex's hardware video plane for wallpapers.
+    return false;
     if(plexPlayback)return false;
     const api=nativeWallpaperApi();
     const source=video.getAttribute('src')||'';
@@ -1495,10 +1602,11 @@
   }
   function startWallpaperVideo(video,moving,preferNative=false){
     if(plexPlayback){video.pause();return}
-    if(!moving){stopNativeWallpaper();video.pause();return}
-    // In the browser HTML5 works reliably. On a physical Tizen set prefer
-    // hardware AVPlay and serve local footage through the LAN bridge.
-    if((preferNative||nativeWallpaperApi())&&tryNativeWallpaper(video,moving))return;
+    if(!moving){clearAnimatedWallpaper();stopNativeWallpaper();video.pause();return}
+    const source=video.dataset.mediaSource||video.getAttribute('src')||'';
+    if(startAnimatedWallpaper(source))return;
+    clearAnimatedWallpaper();
+    // Fallback: the packaged HTML5 MP4, never a bridge-only stream.
     if(nativeWallpaperRequested)stopNativeWallpaper();
     if(document.hidden){video.pause();if(cinemaSelected())setCinemaPlaybackStatus('Waiting for the app to become visible');return}
     video.muted=true;
@@ -1781,10 +1889,11 @@
     const option=wallpaperOptions.find(item=>item.id===settings.wallpaperId);
     const kind=option?.kind||(settings.wallpaperId==='custom-video'?'video':'photo');
     const desiredVideo=(kind==='cinema'||kind==='live'&&option?.video||kind==='video')?true:false;
-    if(!desiredVideo||!settings.wallpaperMotion)stopNativeWallpaper();
+    if(!desiredVideo||!settings.wallpaperMotion){stopNativeWallpaper();clearAnimatedWallpaper();}
     const url=option?.url||(settings.wallpaperId==='custom-image'?validWallpaperURL(settings.customImageUrl||''):null);
     // The user's explicit motion switch controls video. OS reduced-motion CSS still pauses purely decorative animations.
     const moving=settings.wallpaperMotion;
+    if(!desiredVideo)clearAnimatedWallpaper();
     surface.classList.remove('mode-live','mode-photo','mode-solid','mode-video','mode-cinema','has-live-video');
     surface.classList.add('mode-'+kind);
     surface.classList.toggle('cinema-original',kind==='cinema'&&settings.cinemaFit==='original');
@@ -2092,6 +2201,8 @@
       targets.push(...$('cameraPip').querySelectorAll('[data-tv-focus],button,input,select'));
     if(scope===$('app')&&!$('musicMini').hidden)
       targets.push(...$('musicMini').querySelectorAll('button'));
+    if(scope===$('app')&&!$('plexResumeDock').hidden)
+      targets.push(...$('plexResumeDock').querySelectorAll('button'));
     return targets.filter(element=>{
       const rect=element.getBoundingClientRect(),style=getComputedStyle(element);
       return !element.disabled&&rect.width>0&&rect.height>0&&
@@ -2223,7 +2334,7 @@
       plexResumeLoading=false;showToast('Plex launch cancelled');e.preventDefault();return;
     }
     if(!$('plexPlayer').hidden){
-      if(key==='Escape'||key==='Back'||key==='Backspace')closePlexPlayer();
+      if(key==='Escape'||key==='Back'||key==='Backspace')parkPlexPlayer();
       else if(key==='MediaStop')closePlexPlayer();
       else if(key==='MediaPlayPause')plexTogglePause();
       else if(key==='MediaPlay'){if(plexPlayback?.paused)plexTogglePause()}
@@ -2557,6 +2668,9 @@
   if(typeof window.tizen!=='undefined'&&window.tizen.application){
     document.addEventListener('keydown',event=>{
       if(event.keyCode!==10009)return; // Samsung Smart Remote: Return / Back
+      if(!$('plexPlayer').hidden){
+        event.preventDefault();event.stopImmediatePropagation();parkPlexPlayer();return;
+      }
       event.preventDefault();event.stopImmediatePropagation();
       if(!$('searchOverlay').hidden)closeSearch();
       else if($('drawer').classList.contains('open'))closeSettings();
