@@ -2,6 +2,16 @@
 
 Mi Kasa is a Samsung Tizen launcher with an iPhone-inspired lock screen, interactive app dock, Plex Continue Watching/resume, security camera widget, movie calendar, and Live/Cinema video wallpaper.
 
+**Version 0.1.18 — Plex session switching and offline moving backgrounds**
+
+The Plex Continue Watching player now has **Dashboard**, **Close**, and **Plex app** actions. Press **Back** during playback to pause Plex and return to the Mi Kasa dashboard. A persistent dashboard dock provides **Resume Plex** and **Close Plex**; pressing Back again while parked closes the session. Samsung's remote media keys and D-pad navigation remain supported.
+
+The live/cinema background path no longer redirects packaged MP4s to the LAN bridge or tries to consume AVPlay's hardware decoder. Seven video presets now use **offline animated WebP** assets inside the HTML compositor, avoiding Plex video-plane competition. The Cinema playlist cycles its clips every 12 seconds, and the Original Aspect option is preserved. Procedural Live presets remain available and their canvas is raised above the wallpaper scrim. Missing animated WebP files fall back to packaged HTML5 MP4.
+
+**Installation:** The GitHub repository contains the source but does not currently contain the large binary media bundle. To display the new offline animated backgrounds, install the complete v0.1.18 media directory from the full release archive (or apply the update archive, which includes seven WebP files). These archives are attached in the corresponding ChatGPT conversation. Updating just `index.html` with `git pull` will not install them.
+
+**Validation:** JavaScript syntax check passed; Plex, camera, and packaged video regression tests passed; each animated WebP contains 38 decodable frames. Rendering and remote behavior still require physical Samsung Tizen 6.5 TV validation. Native Samsung Spotify/Netflix/Plex applications cannot be embedded or forcibly closed by Mi Kasa's public app permissions; use the native app's own Back/Exit controls. Mi Kasa's own music and web windows remain closable within the Windows tab.
+
 **Version 0.1.17 — Plex foreground video and remote controls**
 
 - [Download complete v0.1.17 source and media](https://chatgpt.com/library?file_id=libfile_a277e32aeeb4819195a5e14d36790be0&account_id=personal)
