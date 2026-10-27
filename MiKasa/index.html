@@ -1463,7 +1463,7 @@
       if(option&&cinemaPlaylist(option).length>1){
         animatedCinemaTimer=setTimeout(()=>{
           animatedCinemaTimer=null;
-          if(!plexPlayback&&settings.wallpaperMotion&&cinemaSelected())stepCinemaClip(1);
+          if((!plexPlayback||plexPlayback.parked)&&settings.wallpaperMotion&&cinemaSelected())stepCinemaClip(1);
         },12000);
       }
     }
@@ -1601,9 +1601,9 @@
     video.pause();attempt(0);return true;
   }
   function startWallpaperVideo(video,moving,preferNative=false){
-    if(plexPlayback){video.pause();return}
+    if(plexPlayback&&!plexPlayback.parked){video.pause();return}
     if(!moving){clearAnimatedWallpaper();stopNativeWallpaper();video.pause();return}
-    const source=video.dataset.mediaSource||video.getAttribute('src')||'';
+    const source=settings.wallpaperId==='custom-video'?(video.getAttribute('src')||''):(video.dataset.mediaSource||video.getAttribute('src')||'');
     if(startAnimatedWallpaper(source))return;
     clearAnimatedWallpaper();
     // Fallback: the packaged HTML5 MP4, never a bridge-only stream.
